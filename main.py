@@ -1,11 +1,11 @@
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt
-from arquivosUI.mainUI import Ui_MainWindow
-from arquivosUI.atendenteUI import Ui_Form_Atendente
-from arquivosUI.pedidosUI import Ui_Form_Pedidos
-from arquivosUI.vendasUI import Ui_Form
-from arquivosUI.cardapioUI import Ui_Form_Cardapio
-from arquivosUI.pedidoSelecUI import Ui_Form_PedidoSelec
+from mainUI import Ui_MainWindow
+from atendenteUI import Ui_Form_Atendente
+from pedidosUI import Ui_Form_Pedidos
+from vendasUI import Ui_Form
+from cardapioUI import Ui_Form_Cardapio
+from pedidoSelecUI import Ui_Form_PedidoSelec
 from logica import Item, Pedido, Sistema
 
 dicPreco ={
