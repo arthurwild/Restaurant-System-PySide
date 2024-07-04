@@ -88,6 +88,8 @@ class PedidosWindow(QtWidgets.QWidget, Ui_Form_Pedidos):
         self.sistema.cria_lista_status()
         self.listaID = []
         self.listaButton = []
+        self.listaTemp = []
+        count = 0
         for index in range(len(self.sistema._listaStatus)):#ajeita o listaStatus e eras, ai tem que botar pushButtons dependendo do status e fazer uma tela que mostra os itens, além de um checkbox pra cada etapa do preparo que muda o status do pedido
            for x in range(len(self.sistema._listaStatus[index])):
                 button = QtWidgets.QPushButton()
@@ -100,24 +102,27 @@ class PedidosWindow(QtWidgets.QWidget, Ui_Form_Pedidos):
                 else:
                     self.layoutFinalizado.addWidget(button)
                 self.listaButton.append(button)
+                self.listaTemp.append(count)
+                count += 1
         for x in range(len(self.listaButton)):
-            self.listaButton[x].clicked.connect(lambda checked, id=self.listaID[x]: self.show_pedido_window(self, id))
+            self.listaButton[x].clicked.connect(lambda checked, id=self.listaID[x], temp=self.listaTemp[x]: self.show_pedido_window(self, id, temp))
     
-    def show_pedido_window(self, checked, identidade):
+    def show_pedido_window(self, checked, identidade, temp):
         self.close()
-        self.w = PedidoSelecWindow(self.sistema, identidade)
+        self.w = PedidoSelecWindow(self.sistema, identidade, temp)
         self.w.show()
 
                    
 class PedidoSelecWindow(QtWidgets.QWidget, Ui_Form_PedidoSelec):
-    def __init__(self, sistema, identidade):
+    def __init__(self, sistema, identidade, temp):
         super().__init__()
         self.setupUi(self)
         self.identidade = identidade
         self.sistema = sistema
-        if self.sistema._listaPedidos[self.identidade].status == "pedido":
+        self.temp = temp
+        if self.sistema._listaPedidos[self.temp].status == "pedido":
             self.radioButton_3.setChecked(True)
-        elif self.sistema._listaPedidos[self.identidade].status == "preparo":
+        elif self.sistema._listaPedidos[self.temp].status == "preparo":
             self.radioButton_2.setChecked(True)
         else:
             self.radioButton.setChecked(True)
